@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		">
+
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:annotation-config/>
+
+	<context:component-scan base-package="own.jadezhang.learning">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- Curator的FactoryBean，Spring启动时创建Curator实例。 -->
+	<bean id="zkClient" class="own.jadezhang.learning.cumquat.zk.ZookeeperFactoryBean" lazy-init="false">
+		<property name="zkIP" value="hadoopmaster:2181"/>
+		<!-- 设置zookeeper的事件监听者，本例是一个logback日志级别znode监听器 -->
+		<property name="listeners">
+			<list>
+				<bean class="own.jadezhang.learning.cumquat.zk.LogLevelZKListener" p:path="conf/cumquat/log_level"/>
+			</list>
+		</property>
+	</bean>
+
+</beans>

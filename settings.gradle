@@ -1,0 +1,3 @@
+rootProject.name = 'learning-cumquat'
+include 'learning-cumquat-curator'
+

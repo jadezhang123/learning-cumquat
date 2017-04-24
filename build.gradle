@@ -1,0 +1,44 @@
+
+version '0.1'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+/*全局配置*/
+allprojects {
+    /*坐标*/
+    group 'own.jadezhang.learning'
+    /*自带插件*/
+    apply plugin: 'java'
+    /*1.7环境*/
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+    /*UTF-8 很重要*/
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.warnings = false
+    }
+}
+
+/** 子项目配置 */
+subprojects {
+
+    /*类库配置*/
+    repositories {
+        mavenLocal()
+        //阿里云maven仓库
+        repositories { maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' } }
+        mavenCentral()
+    }
+    dependencies {
+
+        compile 'org.slf4j:slf4j-api:1.7.21'
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
+        compile group: 'ch.qos.logback', name: 'logback-access', version: '1.1.2'
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+        // 加载libs目录下所有的jar
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+    }
+
+}
