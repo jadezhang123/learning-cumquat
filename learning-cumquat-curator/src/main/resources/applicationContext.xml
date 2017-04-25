@@ -16,7 +16,7 @@
 
 	<!-- Curator的FactoryBean，Spring启动时创建Curator实例。 -->
 	<bean id="zkClient" class="own.jadezhang.learning.cumquat.zk.ZookeeperFactoryBean" lazy-init="false">
-		<property name="zkIP" value="hadoopmaster:2181"/>
+		<property name="zkIP" value="192.168.230.128:2181"/>
 		<!-- 设置zookeeper的事件监听者，本例是一个logback日志级别znode监听器 -->
 		<property name="listeners">
 			<list>
