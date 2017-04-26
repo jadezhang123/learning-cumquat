@@ -31,7 +31,11 @@ public class DefaultZookeeperAccessor extends AbstractZookeeperAccessor {
 
     @Override
     public byte[] getData(String path) {
-        return new byte[0];
+        try {
+            return zkClient.getData().forPath(path);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
