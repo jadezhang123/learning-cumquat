@@ -2,14 +2,12 @@ package own.jadezhang.learning.cumquat.zookeeper.support;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import own.jadezhang.learning.cumquat.zookeeper.DynamicZookeeperAccessor;
-import own.jadezhang.learning.cumquat.zookeeper.listener.NodeListener;
-import own.jadezhang.learning.cumquat.zookeeper.listener.StateListener;
+import own.jadezhang.learning.cumquat.zookeeper.ZookeeperAccessor;
 
 /**
  * Created by Zhang Junwei on 2017/4/26 0026.
  */
-public abstract class AbstractZookeeperAccessor implements DynamicZookeeperAccessor {
+public abstract class AbstractZookeeperAccessor implements ZookeeperAccessor {
     protected static final Logger logger = LoggerFactory.getLogger(AbstractZookeeperAccessor.class);
     private volatile boolean closed = false;
 
@@ -36,27 +34,6 @@ public abstract class AbstractZookeeperAccessor implements DynamicZookeeperAcces
         } catch (Throwable t) {
             logger.warn(t.getMessage(), t);
         }
-    }
-
-
-    @Override
-    public void addNodeListener(NodeListener listener) {
-
-    }
-
-    @Override
-    public void removeNodeListener(NodeListener listener) {
-
-    }
-
-    @Override
-    public void addStateListener(StateListener listener) {
-
-    }
-
-    @Override
-    public void removeStateListener(StateListener listener) {
-
     }
 
     protected abstract void doClose();

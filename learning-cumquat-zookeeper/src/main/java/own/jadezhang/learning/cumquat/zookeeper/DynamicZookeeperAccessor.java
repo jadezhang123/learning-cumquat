@@ -6,11 +6,17 @@ import own.jadezhang.learning.cumquat.zookeeper.listener.StateListener;
 /**
  * Created by Zhang Junwei on 2017/4/26 0026.
  */
-public interface DynamicZookeeperAccessor extends ZookeeperAccessor{
+public interface DynamicZookeeperAccessor extends ZookeeperAccessor {
 
-    void addNodeListener(NodeListener listener);
+    /**
+     *
+     * @param path
+     * @param listener
+     * @return
+     */
+    byte[] addNodeListener(String path, NodeListener listener);
 
-    void removeNodeListener(NodeListener listener);
+    void removeNodeListener(String path, NodeListener listener);
 
     void addStateListener(StateListener listener);
 
