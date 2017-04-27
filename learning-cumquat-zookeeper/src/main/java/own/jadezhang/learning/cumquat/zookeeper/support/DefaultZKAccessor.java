@@ -38,6 +38,16 @@ public class DefaultZKAccessor implements ZKAccessor {
     }
 
     @Override
+    public void create(String path, String data, boolean ephemeral) {
+        create(path, ephemeral);
+        try {
+            zkClient.setData().forPath(path, data.getBytes("utf-8"));
+        } catch (Exception e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void delete(String path) {
         try {
             zkClient.delete().forPath(path);
@@ -98,7 +108,7 @@ public class DefaultZKAccessor implements ZKAccessor {
 
     private void createEphemeral(String path) {
         try {
-            zkClient.create().withMode(CreateMode.EPHEMERAL).forPath(path);
+            zkClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
         } catch (NodeExistsException e) {
         } catch (Exception e) {
             throw new IllegalStateException(e.getMessage(), e);

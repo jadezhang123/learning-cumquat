@@ -3,14 +3,16 @@ package own.jadezhang.learning.cumquat.dynconfig;
 import own.jadezhang.learning.cumquat.zookeeper.DynamicZKAccessor;
 import own.jadezhang.learning.cumquat.zookeeper.listener.NodeListener;
 
+import java.util.Locale;
+
 /**
  * Created by Zhang Junwei on 2017/4/26 0026.
  */
-public class DefaultDynamicConfiguration implements DynamicConfiguration{
+public class DefaultDynamicConfiguration implements DynamicConfiguration {
 
     private DynamicZKAccessor zkAccessor;
 
-    public DefaultDynamicConfiguration(DynamicZKAccessor zkAccessor){
+    public DefaultDynamicConfiguration(DynamicZKAccessor zkAccessor) {
         this.zkAccessor = zkAccessor;
     }
 
@@ -21,12 +23,12 @@ public class DefaultDynamicConfiguration implements DynamicConfiguration{
 
     @Override
     public String formatPtah(String product, String app, String group, String dataId) {
-        return null;
+        return String.format(PATH_FORMATTER, product, app, group, dataId);
     }
 
     @Override
     public void setConfig(String path, String value) throws Exception {
-
+        zkAccessor.create(path, value, false);
     }
 
     @Override
@@ -40,8 +42,7 @@ public class DefaultDynamicConfiguration implements DynamicConfiguration{
     }
 
     public String getConfig(String product, String app, String group, String dataId) {
-        String path = String.format(PATH_FORMATTER, product, app, group, dataId);
-        byte[] data = zkAccessor.getData(path);
+        byte[] data = zkAccessor.getData(formatPtah(product, app, group, dataId));
         return new String(data);
     }
 
@@ -55,7 +56,9 @@ public class DefaultDynamicConfiguration implements DynamicConfiguration{
                     //从本地容灾备份中获取
 
                 }
-                listener.process(new String(data));
+                if (data != null) {
+                    listener.process(new String(data));
+                }
             }
         });
         return new String(bytes);

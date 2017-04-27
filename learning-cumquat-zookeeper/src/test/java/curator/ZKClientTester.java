@@ -16,25 +16,9 @@ public class ZKClientTester {
     public void testConnect() throws Exception {
 
         final int i= 10000000;
-        ExecutorService service = Executors.newCachedThreadPool();
-        for (int k = 0; k < 5; k ++){
-            service.execute(new Runnable() {
-                @Override
-                public void run() {
-                    for (int j = 0; j < i; j++) {
-                        System.out.println(Thread.currentThread().getName()+":"+ ZKClientFactory.getClient().getState());
-                        try {
-                            TimeUnit.MILLISECONDS.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
-        }
-        service.shutdown();
         for (int j = 0; j < i; j++) {
             try {
+                System.out.println(ZKClientFactory.getClient().getState());
                 TimeUnit.MILLISECONDS.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();

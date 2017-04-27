@@ -4,6 +4,8 @@ import org.apache.curator.framework.api.CuratorWatcher;
 import org.apache.curator.framework.api.Pathable;
 import org.apache.zookeeper.KeeperException.NoNodeException;
 import org.apache.zookeeper.WatchedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import own.jadezhang.learning.cumquat.zookeeper.DynamicZKAccessor;
 import own.jadezhang.learning.cumquat.zookeeper.listener.NodeListener;
 import own.jadezhang.learning.cumquat.zookeeper.listener.StateListener;
@@ -16,11 +18,14 @@ import java.util.concurrent.Executors;
  */
 public abstract class AbstractDynamicZKAccessor extends DefaultZKAccessor implements DynamicZKAccessor {
 
+    private final static Logger logger = LoggerFactory.getLogger(AbstractDynamicZKAccessor.class);
+
     @Override
     public byte[] addNodeListener(String path, NodeListener listener) {
         try {
             return zkClient.getData().usingWatcher(new CuratorWatcherImpl(listener)).forPath(path);
         } catch (NoNodeException e) {
+            logger.warn("to addNodeListener for {} occurred a error because of no node", path);
             return null;
         } catch (Exception e) {
             throw new IllegalStateException(e.getMessage(), e);

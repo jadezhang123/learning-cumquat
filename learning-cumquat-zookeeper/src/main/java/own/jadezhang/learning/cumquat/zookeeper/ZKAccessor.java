@@ -9,6 +9,8 @@ public interface ZKAccessor {
 
     void create(String path, boolean ephemeral);
 
+    void create(String path, String data, boolean ephemeral);
+
     void delete(String path);
 
     byte[] getData(String path);
