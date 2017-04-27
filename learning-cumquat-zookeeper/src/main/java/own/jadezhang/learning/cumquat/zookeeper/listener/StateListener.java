@@ -16,5 +16,7 @@ public interface StateListener {
 
     void onReconnected();
 
+    void stateChanged(int connected);
+
 
 }

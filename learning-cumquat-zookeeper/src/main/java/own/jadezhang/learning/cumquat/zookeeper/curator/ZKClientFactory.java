@@ -15,7 +15,7 @@ import java.util.Properties;
 
 /**
  * 由于zookeeper集群特性与CuratorFramework的重连特性，
- * 单个应用应该保证运行期zookeeper客户端的单例特性
+ * 单个应用应该保证zookeeper客户端在运行期内的单例特性
  * Created by Zhang Junwei on 2017/4/26 0026.
  */
 public class ZKClientFactory {
@@ -37,9 +37,13 @@ public class ZKClientFactory {
             public void stateChanged(CuratorFramework client, ConnectionState newState) {
                 switch (newState) {
                     case CONNECTED:
+                        logger.info("zookeeper CONNECTED");
+                        break;
                     case RECONNECTED:
+                        logger.info("zookeeper RECONNECTED");
                         break;
                     case LOST:
+                        logger.info("zookeeper LOST");
                         break;
                 }
             }

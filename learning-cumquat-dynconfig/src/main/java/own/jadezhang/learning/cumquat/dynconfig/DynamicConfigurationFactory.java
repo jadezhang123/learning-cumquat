@@ -1,12 +1,13 @@
 package own.jadezhang.learning.cumquat.dynconfig;
 
-import own.jadezhang.learning.cumquat.zookeeper.support.ZKAccessorFactory;
+import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
 
 /**
  * Created by Zhang Junwei on 2017/4/27 0027.
  */
 public class DynamicConfigurationFactory {
+
     public static DynamicConfiguration dynamicConfiguration(){
-        return new DefaultDynamicConfiguration(ZKAccessorFactory.dynamicZKAccessor());
+        return new CuratorDynamicConfiguration(ZKClientFactory.getClient());
     }
 }

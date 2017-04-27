@@ -1,7 +1,6 @@
 package own.jadezhang.learning.cumquat.zookeeper.support;
 
 import org.apache.curator.framework.api.CuratorWatcher;
-import org.apache.curator.framework.api.Pathable;
 import org.apache.zookeeper.KeeperException.NoNodeException;
 import org.apache.zookeeper.WatchedEvent;
 import org.slf4j.Logger;
@@ -10,7 +9,8 @@ import own.jadezhang.learning.cumquat.zookeeper.DynamicZKAccessor;
 import own.jadezhang.learning.cumquat.zookeeper.listener.NodeListener;
 import own.jadezhang.learning.cumquat.zookeeper.listener.StateListener;
 
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.Executors;
 
 /**
@@ -19,6 +19,8 @@ import java.util.concurrent.Executors;
 public abstract class AbstractDynamicZKAccessor extends DefaultZKAccessor implements DynamicZKAccessor {
 
     private final static Logger logger = LoggerFactory.getLogger(AbstractDynamicZKAccessor.class);
+
+    private final Set<StateListener> stateListeners = new CopyOnWriteArraySet<StateListener>();
 
     @Override
     public byte[] addNodeListener(String path, NodeListener listener) {
@@ -39,12 +41,22 @@ public abstract class AbstractDynamicZKAccessor extends DefaultZKAccessor implem
 
     @Override
     public void addStateListener(StateListener listener) {
-
+        stateListeners.add(listener);
     }
 
     @Override
     public void removeStateListener(StateListener listener) {
+        stateListeners.remove(listener);
+    }
 
+    public Set<StateListener> getSessionListeners() {
+        return stateListeners;
+    }
+
+    protected void stateChanged(int state) {
+        for (StateListener sessionListener : getSessionListeners()) {
+            sessionListener.stateChanged(state);
+        }
     }
 
     private class CuratorWatcherImpl implements CuratorWatcher {

@@ -1,0 +1,15 @@
+group 'own.jadezhang.learning'
+version '0.1'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':learning-cumquat-zookeeper')
+    compile 'org.springframework:spring-context:4.2.5.RELEASE'
+}

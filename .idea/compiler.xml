@@ -23,6 +23,8 @@
       <module name="learning-cumquat-curator_test" target="1.7" />
       <module name="learning-cumquat-dynconfig_main" target="1.7" />
       <module name="learning-cumquat-dynconfig_test" target="1.7" />
+      <module name="learning-cumquat-spring-zkconfig_main" target="1.7" />
+      <module name="learning-cumquat-spring-zkconfig_test" target="1.7" />
       <module name="learning-cumquat-zkclient_main" target="1.7" />
       <module name="learning-cumquat-zkclient_test" target="1.7" />
       <module name="learning-cumquat-zookeeper_main" target="1.7" />

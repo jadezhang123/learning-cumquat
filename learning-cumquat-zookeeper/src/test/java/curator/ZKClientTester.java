@@ -3,8 +3,6 @@ package curator;
 import org.junit.Test;
 import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**

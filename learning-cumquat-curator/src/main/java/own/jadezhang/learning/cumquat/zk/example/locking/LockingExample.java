@@ -33,7 +33,8 @@ public class LockingExample {
     private static final int REPETITIONS = QTY * 10;
 
     private static final String PATH = "/examples/locks";
-    private static final String CONNECT_STRING = "192.168.17.45:2181";
+    //private static final String CONNECT_STRING = "192.168.17.45:2181";
+    private static final String CONNECT_STRING = "192.168.230.128:2181";
 
     public static void main(String[] args) throws Exception {
         // all of the useful sample code is in ExampleClientThatLocks.java
