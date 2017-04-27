@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Zhang Junwei on 2017/4/26 0026.
  */
-public interface ZookeeperAccessor {
+public interface ZKAccessor {
 
     void create(String path, boolean ephemeral);
 

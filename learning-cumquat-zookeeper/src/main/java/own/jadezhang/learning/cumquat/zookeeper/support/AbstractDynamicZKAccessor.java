@@ -1,18 +1,20 @@
 package own.jadezhang.learning.cumquat.zookeeper.support;
 
 import org.apache.curator.framework.api.CuratorWatcher;
+import org.apache.curator.framework.api.Pathable;
 import org.apache.zookeeper.KeeperException.NoNodeException;
 import org.apache.zookeeper.WatchedEvent;
-import own.jadezhang.learning.cumquat.zookeeper.DynamicZookeeperAccessor;
+import own.jadezhang.learning.cumquat.zookeeper.DynamicZKAccessor;
 import own.jadezhang.learning.cumquat.zookeeper.listener.NodeListener;
 import own.jadezhang.learning.cumquat.zookeeper.listener.StateListener;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 
 /**
  * Created by Zhang Junwei on 2017/4/26.
  */
-public abstract class AbstractDynamicZookeeperAccessor extends DefaultZookeeperAccessor implements DynamicZookeeperAccessor {
+public abstract class AbstractDynamicZKAccessor extends DefaultZKAccessor implements DynamicZKAccessor {
 
     @Override
     public byte[] addNodeListener(String path, NodeListener listener) {
@@ -52,12 +54,22 @@ public abstract class AbstractDynamicZookeeperAccessor extends DefaultZookeeperA
             this.listener = null;
         }
 
-        public void process(WatchedEvent event) throws Exception {
+        public void process(final WatchedEvent event) throws Exception {
             if (listener != null) {
                 Executors.newSingleThreadExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
-                        //
+                        switch (event.getType()){
+                            case NodeCreated:
+                                break;
+                            case NodeDataChanged:
+                                listener.onDataChanged(event.getPath());
+                                break;
+                            case NodeDeleted:
+                                break;
+                            case NodeChildrenChanged:
+                                break;
+                        }
                     }
                 });
             }

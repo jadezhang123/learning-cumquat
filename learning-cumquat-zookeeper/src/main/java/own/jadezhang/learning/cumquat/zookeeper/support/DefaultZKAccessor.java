@@ -4,6 +4,9 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException.NoNodeException;
 import org.apache.zookeeper.KeeperException.NodeExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import own.jadezhang.learning.cumquat.zookeeper.ZKAccessor;
 import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
 
 import java.util.Collections;
@@ -12,12 +15,26 @@ import java.util.List;
 /**
  * Created by Zhang Junwei on 2017/4/27.
  */
-public class DefaultZookeeperAccessor extends AbstractZookeeperAccessor {
-
+public class DefaultZKAccessor implements ZKAccessor {
+    protected static final Logger logger = LoggerFactory.getLogger(DefaultZKAccessor.class);
+    private volatile boolean closed = false;
     protected CuratorFramework zkClient;
 
-    public DefaultZookeeperAccessor() {
+    public DefaultZKAccessor() {
         zkClient = ZKClientFactory.getClient();
+    }
+
+    @Override
+    public void create(String path, boolean ephemeral) {
+        int i = path.lastIndexOf('/');
+        if (i > 0) {
+            create(path.substring(0, i), false);
+        }
+        if (ephemeral) {
+            createEphemeral(path);
+        } else {
+            createPersistent(path);
+        }
     }
 
     @Override
@@ -54,13 +71,23 @@ public class DefaultZookeeperAccessor extends AbstractZookeeperAccessor {
         return zkClient.getZookeeperClient().isConnected();
     }
 
-    @Override
-    protected void doClose() {
+    public void close() {
+        if (closed) {
+            return;
+        }
+        closed = true;
+        try {
+            doClose();
+        } catch (Throwable t) {
+            logger.warn(t.getMessage(), t);
+        }
+    }
+
+    private void doClose() {
         zkClient.close();
     }
 
-    @Override
-    protected void createPersistent(String path) {
+    private void createPersistent(String path) {
         try {
             zkClient.create().creatingParentsIfNeeded().forPath(path);
         } catch (NodeExistsException e) {
@@ -69,8 +96,7 @@ public class DefaultZookeeperAccessor extends AbstractZookeeperAccessor {
         }
     }
 
-    @Override
-    protected void createEphemeral(String path) {
+    private void createEphemeral(String path) {
         try {
             zkClient.create().withMode(CreateMode.EPHEMERAL).forPath(path);
         } catch (NodeExistsException e) {
