@@ -1,12 +1,16 @@
 package own.jadezhang.learning.cumquat.dynconfig;
 
+import com.google.common.collect.Maps;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.CuratorWatcher;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import own.jadezhang.learning.cumquat.zookeeper.util.ZKBackupUtil;
 
+import java.io.IOException;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 
 /**
@@ -17,6 +21,8 @@ public class CuratorDynamicConfiguration implements DynamicConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(CuratorDynamicConfiguration.class);
 
     private CuratorFramework zkClient;
+
+    private ConcurrentMap<String, byte[]> recoverDataCache = Maps.newConcurrentMap();
 
     public CuratorDynamicConfiguration(CuratorFramework zkClient) {
         this.zkClient = zkClient;
@@ -76,14 +82,6 @@ public class CuratorDynamicConfiguration implements DynamicConfiguration {
         return getData(formatPtah(product, app, group, dataId));
     }
 
-    private String getData(String path) {
-        try {
-            return new String(zkClient.getData().forPath(path));
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     @Override
     public String registerListener(final String path, final DataChangedListener listener) {
         try {
@@ -96,13 +94,7 @@ public class CuratorDynamicConfiguration implements DynamicConfiguration {
                         Executors.newSingleThreadExecutor().execute(new Runnable() {
                             @Override
                             public void run() {
-                                String data = null;
-                                try {
-                                    data = new String(zkClient.getData().forPath(path));
-                                } catch (Exception e) {
-                                    //从本地容灾备份中获取数据
-
-                                }
+                                String data = getData(path);
                                 if (data != null) {
                                     listener.process(data);
                                 }
@@ -116,6 +108,28 @@ public class CuratorDynamicConfiguration implements DynamicConfiguration {
             logger.warn("registering listener for {} occurred error : {}", path, e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * 获取数据，先从zookeeper获取数据并备份到本地，若失败则从本地获取
+     * @param path
+     * @return
+     */
+    private String getData(String path) {
+        try {
+            try {
+                byte[] content = zkClient.getData().forPath(path);
+                //备份数据
+                ZKBackupUtil.backupData(content, path, recoverDataCache);
+                return new String(content);
+            } catch (Exception e) {
+                //从本地容灾备份中获取数据
+                return new String(ZKBackupUtil.loadBackupData(path));
+            }
+        } catch (IOException e) {
+            logger.warn("FAILED to load backup data from local", e.getMessage());
+            return null;
+        }
     }
 
 }

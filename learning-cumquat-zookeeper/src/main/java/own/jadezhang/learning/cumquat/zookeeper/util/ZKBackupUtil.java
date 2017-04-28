@@ -38,7 +38,7 @@ public class ZKBackupUtil {
                     }
                     //数据有更新也刷盘
                     if (oldCacheData != null && Arrays.equals(content, oldCacheData)) {
-                       doBackup(content, path);
+                        doBackup(content, path);
                     }
                 } catch (Exception e) {
                     logger.error("backing up data of {} occurred error", e);
@@ -48,26 +48,25 @@ public class ZKBackupUtil {
     }
 
     /**
-     * 将数组复制到备份文件中
+     * 将数据复制到备份文件中
      * @param content
      * @param path
      * @throws IOException
      */
     private static void doBackup(byte[] content, String path) throws IOException {
         Files.write(content, getBackupFile(path));
-        logger.warn("backup data of {} successfully", path);
+        logger.warn("backing up data of {} successfully", path);
     }
 
     /**
      * 从本地加载备份数据
      * @param path
-     * @return
-     * @throws IOException
+     * @return 当获取异常时返回null
      */
-    public static byte[] loadRecoverData(String path) throws IOException {
-        //从本地获取配置数据
-        logger.warn("load recover data from {} at local backup file", path);
+    public static byte[] loadBackupData(String path) throws IOException {
+        logger.warn("load backup data from {} at local backup file", path);
         return Files.toByteArray(getBackupFile(path));
+
     }
 
     /**
@@ -88,7 +87,7 @@ public class ZKBackupUtil {
 
     public static void main(String[] args) throws IOException {
 
-        byte[] bytes = loadRecoverData("/startConfigs/learning/cumquat/config");
+        byte[] bytes = loadBackupData("/startConfigs/learning/cumquat/config");
 
         System.out.println(new String(bytes));
 

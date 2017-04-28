@@ -32,25 +32,24 @@ public class ZookeeperResource extends AbstractResource {
 
     private ConcurrentMap<String, byte[]> recoverDataCache = Maps.newConcurrentMap();
 
-    private ApplicationContext ctx;
-
     public InputStream getInputStream() throws IOException {
         byte[] data = null;
         try {
             CuratorFramework client = ZKClientFactory.getClient();
             if (client.checkExists().forPath(path) != null) {
                 data = client.getData().forPath(path);
+                //备份配置数据到本地
+                ZKBackupUtil.backupData(data, path, recoverDataCache);
             } else {
                 logger.error("{} do not exists at zookeeper[{}]", path, client.getZookeeperClient().getCurrentConnectionString());
                 System.exit(-1);
             }
         } catch (Exception e) {
             logger.error("zookeeper server occurred error", e);
+            //因为curator的重连特性，需要在curator根据配置的重连策略尝试失败后才启动spring
             //从本地容灾缓存中获取配置数据
-            data = ZKBackupUtil.loadRecoverData(path);
+            data = ZKBackupUtil.loadBackupData(path);
         }
-        //备份配置数据到本地
-        ZKBackupUtil.backupData(data, path, recoverDataCache);
 
         return new ByteArrayInputStream(data);
     }
