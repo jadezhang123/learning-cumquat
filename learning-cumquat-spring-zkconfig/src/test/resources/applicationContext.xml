@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<context:component-scan base-package="own.jadezhang.learing.cumquat" />-->
+
+    <bean id="zkConfig" class="own.jadezhang.learing.cumquat.springzk.ZookeeperConfig">
+        <property name="location">
+            <bean class="own.jadezhang.learing.cumquat.springzk.ZookeeperResource"></bean>
+        </property>
+    </bean>
+
+    <bean class="springzk.TestDomain">
+        <property name="name" value="${jdbc_url}"/>
+    </bean>
+</beans>

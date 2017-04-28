@@ -1,4 +1,4 @@
-package own.jadezhang.learing.springzk;
+package own.jadezhang.learing.cumquat.springzk;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ZookeeperConfigConfiguration {
+
     @Bean
     public ZookeeperConfig zookeeperConfig(){
         ZookeeperConfig zookeeperConfig = new ZookeeperConfig();

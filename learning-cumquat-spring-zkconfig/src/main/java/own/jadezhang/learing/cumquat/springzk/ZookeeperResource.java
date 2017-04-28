@@ -1,4 +1,4 @@
-package own.jadezhang.learing.springzk;
+package own.jadezhang.learing.cumquat.springzk;
 
 import com.google.common.collect.Maps;
 import org.apache.curator.framework.CuratorFramework;
@@ -20,17 +20,17 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Created by Zhang Junwei on 2017/4/27.
  */
-public class ZookeeperResource extends AbstractResource implements ApplicationContextAware {
+public class ZookeeperResource extends AbstractResource {
 
     public static final String URL_HEADER = "zk://";
     //启动配置路径
-    private static final String PATH_FORMATTER = "/startConfigs/%s/%s/configs";
+    private static final String PATH_FORMATTER = "/startConfigs/%s/%s/config";
 
     private String path = String.format(PATH_FORMATTER, "learning", "cumquat");
 
     private static final Logger logger = LoggerFactory.getLogger(ZookeeperResource.class);
 
-    private ConcurrentMap<String, Object> recoverDataCache = Maps.newConcurrentMap();
+    private ConcurrentMap<String, byte[]> recoverDataCache = Maps.newConcurrentMap();
 
     private ApplicationContext ctx;
 
@@ -84,8 +84,5 @@ public class ZookeeperResource extends AbstractResource implements ApplicationCo
         return "start configs at " + URL_HEADER + path;
     }
 
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.ctx = applicationContext;
-    }
 
 }
