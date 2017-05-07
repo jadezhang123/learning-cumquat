@@ -6,4 +6,5 @@ apply plugin: 'java'
 dependencies {
     compile project(':learning-cumquat-zookeeper')
     compile 'org.springframework:spring-context:4.2.5.RELEASE'
+
 }

@@ -12,7 +12,7 @@
         </property>
     </bean>
 
-    <bean class="springzk.TestDomain">
+    <bean class="own.jadezhang.learning.cumquat.test.springzk.TestDomain">
         <property name="name" value="${jdbc_url}"/>
     </bean>
 </beans>

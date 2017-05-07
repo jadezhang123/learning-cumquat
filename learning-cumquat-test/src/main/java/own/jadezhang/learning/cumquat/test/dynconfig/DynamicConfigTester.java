@@ -1,6 +1,5 @@
-package dynconfig;
+package own.jadezhang.learning.cumquat.test.dynconfig;
 
-import org.junit.Test;
 import own.jadezhang.learning.cumquat.dynconfig.DataChangedListener;
 import own.jadezhang.learning.cumquat.dynconfig.DynamicConfiguration;
 import own.jadezhang.learning.cumquat.dynconfig.DynamicConfigurationFactory;
@@ -13,8 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class DynamicConfigTester {
     public static final String path = "/configs/learning/cumquat/test";
 
-    @Test
-    public void name() throws Exception {
+    public static void testDyn() throws Exception {
 
         DynamicConfiguration dynamicConfiguration = DynamicConfigurationFactory.dynamicConfiguration();
         dynamicConfiguration.setConfig(path, "hello");
@@ -31,5 +29,9 @@ public class DynamicConfigTester {
             TimeUnit.MILLISECONDS.sleep(1000);
         }
 
+    }
+
+    public static void main(String[] args) throws Exception {
+        DynamicConfigTester.testDyn();
     }
 }

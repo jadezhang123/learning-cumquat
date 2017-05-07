@@ -1,4 +1,4 @@
-package springzk;
+package own.jadezhang.learning.cumquat.test.springzk;
 
 /**
  * Created by Zhang Junwei on 2017/4/28 0028.

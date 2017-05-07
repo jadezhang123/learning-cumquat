@@ -4,9 +4,6 @@ import com.google.common.collect.Maps;
 import org.apache.curator.framework.CuratorFramework;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.AbstractResource;
 import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
 import own.jadezhang.learning.cumquat.zookeeper.util.ZKBackupUtil;
@@ -21,14 +18,13 @@ import java.util.concurrent.ConcurrentMap;
  * Created by Zhang Junwei on 2017/4/27.
  */
 public class ZookeeperResource extends AbstractResource {
+    private static final Logger logger = LoggerFactory.getLogger(ZookeeperResource.class);
 
     public static final String URL_HEADER = "zk://";
     //启动配置路径
     private static final String PATH_FORMATTER = "/startConfigs/%s/%s/config";
 
     private String path = String.format(PATH_FORMATTER, "learning", "cumquat");
-
-    private static final Logger logger = LoggerFactory.getLogger(ZookeeperResource.class);
 
     private ConcurrentMap<String, byte[]> recoverDataCache = Maps.newConcurrentMap();
 
@@ -59,7 +55,7 @@ public class ZookeeperResource extends AbstractResource {
         try {
             return null != ZKClientFactory.getClient().checkExists().forPath(path);
         } catch (Exception e) {
-            logger.error("Failed  to detect the config in zookeeper.", e);
+            logger.error("Failed  to detect the config from zookeeper.", e);
             return false;
         }
     }
@@ -83,5 +79,11 @@ public class ZookeeperResource extends AbstractResource {
         return "start configs at " + URL_HEADER + path;
     }
 
+    public String getPath() {
+        return path;
+    }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
 }

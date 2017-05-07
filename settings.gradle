@@ -4,4 +4,5 @@ include 'learning-cumquat-dynconfig'
 include 'learning-cumquat-zookeeper'
 include 'learning-cumquat-spring-zkconfig'
 include 'learning-cumquat-spring-zkconfig'
+include 'learning-cumquat-test'
 

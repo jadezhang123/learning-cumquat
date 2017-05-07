@@ -9,6 +9,7 @@ sourceCompatibility = 1.7
 allprojects {
     /*坐标*/
     group 'own.jadezhang.learning'
+    version '0.0.1'
     /*自带插件*/
     apply plugin: 'java'
     /*1.7环境*/

@@ -1,6 +1,5 @@
-package curator;
+package own.jadezhang.learning.cumquat.test.zk;
 
-import org.junit.Test;
 import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -10,8 +9,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class ZKClientTester {
-    @Test
-    public void testConnect() throws Exception {
+    public static void testConnect() throws Exception {
 
         final int i= 10000000;
         for (int j = 0; j < i; j++) {
@@ -22,5 +20,9 @@ public class ZKClientTester {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ZKClientTester.testConnect();
     }
 }

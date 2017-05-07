@@ -1,7 +1,6 @@
-package springzk;
+package own.jadezhang.learning.cumquat.test.springzk;
 
-import org.junit.Assert;
-import org.junit.Test;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -12,8 +11,8 @@ import java.util.concurrent.Executors;
  * Created by Zhang Junwei on 2017/4/28 0028.
  */
 public class SpringZkTester {
-    @Test
-    public void testZKConfig() throws Exception {
+
+    public static void testZKConfig() throws Exception {
 
         ExecutorService service = Executors.newFixedThreadPool(5);
 
@@ -23,11 +22,15 @@ public class SpringZkTester {
                 public void run() {
                     ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
                     TestDomain bean = ctx.getBean(TestDomain.class);
-                    Assert.assertEquals("the name of testDomain should be 123", "123", bean.getName());
+                    System.out.println(" the name of testDomain is  "+bean.getName());
                 }
             });
         }
         service.shutdown();
 
+    }
+
+    public static void main(String[] args) throws Exception {
+        SpringZkTester.testZKConfig();
     }
 }
