@@ -1,5 +1,3 @@
-group 'own.jadezhang.learning'
-version '0.1'
 
 apply plugin: 'java'
 

@@ -22,7 +22,7 @@ public class ZookeeperResource extends AbstractResource {
 
     public static final String URL_HEADER = "zk://";
     //启动配置路径
-    private static final String PATH_FORMATTER = "/startConfigs/%s/%s/config";
+    private static final String PATH_FORMATTER = "/startConfigs/%s/%s/configs";
 
     private String path = String.format(PATH_FORMATTER, "learning", "cumquat");
 
@@ -32,6 +32,7 @@ public class ZookeeperResource extends AbstractResource {
         byte[] data = null;
         try {
             CuratorFramework client = ZKClientFactory.getClient();
+            logger.info("path is {}", path);
             if (client.checkExists().forPath(path) != null) {
                 data = client.getData().forPath(path);
                 //备份配置数据到本地

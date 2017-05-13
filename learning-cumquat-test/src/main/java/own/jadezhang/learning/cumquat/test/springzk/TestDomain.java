@@ -6,11 +6,22 @@ package own.jadezhang.learning.cumquat.test.springzk;
 public class TestDomain {
     private String name;
 
+    private String quartzDB;
+
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getQuartzDB() {
+        return quartzDB;
+    }
+
+    public void setQuartzDB(String quartzDB) {
+        this.quartzDB = quartzDB;
     }
 }
