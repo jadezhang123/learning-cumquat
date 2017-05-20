@@ -1,2 +1,31 @@
-.idea/*
-*/*.iml
+###############
+#  temp file  #
+###############
+~*
+*.log
+*.cmm
+*.men
+*.ini
+*.fig
+*.cmp
+*.tmp
+
+###############
+#    script   #
+###############
+*.bat
+
+##eclipse###
+/bin/
+.project
+/.setting/
+.classpath
+
+
+##idea##
+.idea/
+*.iml
+out
+.gradle
+build/
+.svn/
