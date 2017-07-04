@@ -5,6 +5,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.AbstractResource;
+import own.jadezhang.learning.cumquat.zookeeper.context.ProductApplicationContext;
 import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
 import own.jadezhang.learning.cumquat.zookeeper.util.ZKBackupUtil;
 
@@ -21,10 +22,10 @@ public class ZookeeperResource extends AbstractResource {
     private static final Logger logger = LoggerFactory.getLogger(ZookeeperResource.class);
 
     public static final String URL_HEADER = "zk://";
-    //启动配置路径
+    //启动配置路径：/startConfigs/{product}/{app}/configs
     private static final String PATH_FORMATTER = "/startConfigs/%s/%s/configs";
 
-    private String path = String.format(PATH_FORMATTER, "learning", "cumquat");
+    private String path = String.format(PATH_FORMATTER, ProductApplicationContext.getInstance().product(), ProductApplicationContext.getInstance().app());
 
     private ConcurrentMap<String, byte[]> recoverDataCache = Maps.newConcurrentMap();
 

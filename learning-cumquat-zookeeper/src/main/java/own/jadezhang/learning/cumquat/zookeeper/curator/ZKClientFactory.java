@@ -9,9 +9,8 @@ import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.InputStream;
-import java.util.Properties;
+import own.jadezhang.learning.cumquat.zookeeper.context.IProductApplicationContext;
+import own.jadezhang.learning.cumquat.zookeeper.context.ProductApplicationContext;
 
 /**
  * 由于zookeeper集群特性与CuratorFramework的重连特性，
@@ -29,7 +28,7 @@ public class ZKClientFactory {
     private final CuratorFramework client;
 
     private ZKClientFactory() {
-        String connectString = loadConfigFile();
+        String connectString = getConnectString();
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
         client = createWithOptions(connectString, retryPolicy, 2000, 10000);
         client.getConnectionStateListenable().addListener(new ConnectionStateListener() {
@@ -52,30 +51,25 @@ public class ZKClientFactory {
     }
 
     /**
-     * 加载应用信息配置文件获取zookeeper连接信息
+     * 通过应用context获取zookeeper连接信息
      * @return
      */
-    private String loadConfigFile() {
+    private String getConnectString() {
         String connectString = DEFAULT_CONNECT_STRING;
-        try {
-            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(APP_MAIN_CONF_FILE);
-            Properties properties = new Properties();
-            properties.load(resourceAsStream);
-            //连接集群配置
-            String connStr = properties.getProperty("zk.connectString");
-            if (StringUtils.isNoneBlank(connStr)) {
-                connectString = connStr;
-            }else {
-                //连接单点配置
-                String ip = properties.getProperty("zk.ip");
-                String port = properties.getProperty("zk.port");
-                if (StringUtils.isNoneBlank(ip) && StringUtils.isNoneBlank(port)) {
-                    connectString = ip + ":" + port;
-                }
+        IProductApplicationContext context = ProductApplicationContext.getInstance();
+        //连接集群配置
+        String connStr = context.zkConnectString();
+        if (StringUtils.isNoneBlank(connStr)) {
+            connectString = connStr;
+        } else {
+            //连接单点配置
+            String ip = context.zkIp();
+            String port = context.zkPort();
+            if (StringUtils.isNoneBlank(ip) && StringUtils.isNoneBlank(port)) {
+                connectString = ip + ":" + port;
             }
-        } catch (Exception e) {
-            logger.error("load main config file [{}] from classpath occurred a error : {}", APP_MAIN_CONF_FILE, e.getMessage());
         }
+
         logger.info("using connectString[{}] to connect zookeeper", connectString);
         return connectString;
     }
