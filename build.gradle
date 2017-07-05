@@ -1,5 +1,5 @@
 
-version '0.0.1'
+version '0.0.2'
 
 apply plugin: 'java'
 apply from: 'dependencies.gradle'
@@ -9,7 +9,7 @@ sourceCompatibility = 1.7
 allprojects {
     /*坐标*/
     group 'own.jadezhang.learning'
-    version '0.0.1'
+    version '0.0.2'
     /*自带插件*/
     apply plugin: 'java'
     apply plugin: 'maven'
@@ -34,7 +34,6 @@ subprojects {
         mavenCentral()
     }
     dependencies {
-
         compile 'org.slf4j:slf4j-api:1.7.21'
         compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.2'
         compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -47,9 +46,8 @@ subprojects {
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
         from sourceSets.main.allSource
-
-
     }
+
 
     artifacts {
         archives jar

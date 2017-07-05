@@ -4,5 +4,4 @@ apply plugin: 'java'
 dependencies {
     compile project(':learning-cumquat-spring-zkconfig')
     compile project(':learning-cumquat-dynconfig')
-    compile project(':learning-cumquat-curator')
 }
