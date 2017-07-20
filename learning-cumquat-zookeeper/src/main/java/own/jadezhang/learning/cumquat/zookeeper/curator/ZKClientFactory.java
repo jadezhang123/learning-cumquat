@@ -19,12 +19,9 @@ import own.jadezhang.learning.cumquat.zookeeper.context.ProductApplicationContex
  */
 public class ZKClientFactory {
 
-    private final static Logger logger = LoggerFactory.getLogger(ZKClientFactory.class);
-
     public static final String DEFAULT_CONNECT_STRING = "192.168.17.45:2181";
-
     public static final String APP_MAIN_CONF_FILE = "config/main-conf.properties";
-
+    private final static Logger logger = LoggerFactory.getLogger(ZKClientFactory.class);
     private final CuratorFramework client;
 
     private ZKClientFactory() {
@@ -48,6 +45,14 @@ public class ZKClientFactory {
             }
         });
         client.start();
+    }
+
+    /**
+     * 获取zk客户端实例（单例）
+     * @return
+     */
+    public static CuratorFramework getClient() {
+        return ZKClientHolder.instance.client;
     }
 
     /**
@@ -83,16 +88,7 @@ public class ZKClientFactory {
                 .build();
     }
 
-
     private static class ZKClientHolder {
         private static final ZKClientFactory instance = new ZKClientFactory();
-    }
-
-    /**
-     * 获取zk客户端实例（单例）
-     * @return
-     */
-    public static CuratorFramework getClient() {
-        return ZKClientHolder.instance.client;
     }
 }

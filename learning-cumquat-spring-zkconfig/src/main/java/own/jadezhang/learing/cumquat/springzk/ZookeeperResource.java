@@ -19,9 +19,8 @@ import java.util.concurrent.ConcurrentMap;
  * Created by Zhang Junwei on 2017/4/27.
  */
 public class ZookeeperResource extends AbstractResource {
-    private static final Logger logger = LoggerFactory.getLogger(ZookeeperResource.class);
-
     public static final String URL_HEADER = "zk://";
+    private static final Logger logger = LoggerFactory.getLogger(ZookeeperResource.class);
     //启动配置路径：/startConfigs/{product}/{app}/configs
     private static final String PATH_FORMATTER = "/startConfigs/%s/%s/configs";
 

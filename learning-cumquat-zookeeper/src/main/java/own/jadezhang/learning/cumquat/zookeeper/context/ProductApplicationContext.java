@@ -12,10 +12,7 @@ import java.util.Properties;
  */
 public class ProductApplicationContext implements IProductApplicationContext {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductApplicationContext.class);
-
     public static final String APP_MAIN_CONF_FILE = "config/main-conf.properties";
-
     public static final String CONF_PRODUCT = "product";
     public static final String CONF_APP = "app";
     public static final String CONF_APP_Name = "appName";
@@ -23,7 +20,7 @@ public class ProductApplicationContext implements IProductApplicationContext {
     public static final String CONF_ZK_PORT = "zk.port";
     public static final String CONF_ZK_CONNECT_STRING = "zk.connectString";
     public static final String CONF_BACKUP_DIR = "backupDir";
-
+    private static final Logger logger = LoggerFactory.getLogger(ProductApplicationContext.class);
     private String product;
     private String app;
     private String appName;
@@ -48,10 +45,6 @@ public class ProductApplicationContext implements IProductApplicationContext {
             logger.error("load main config file [{}] from classpath occurred a error : {}", APP_MAIN_CONF_FILE, e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    private static class ContextHolder {
-        private static final IProductApplicationContext context = new ProductApplicationContext();
     }
 
     public static IProductApplicationContext getInstance() {
@@ -91,5 +84,9 @@ public class ProductApplicationContext implements IProductApplicationContext {
     @Override
     public String backupDir() {
         return backupDir;
+    }
+
+    private static class ContextHolder {
+        private static final IProductApplicationContext context = new ProductApplicationContext();
     }
 }

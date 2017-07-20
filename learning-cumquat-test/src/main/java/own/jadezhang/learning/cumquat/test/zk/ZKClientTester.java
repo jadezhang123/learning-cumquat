@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class ZKClientTester {
     public static void testConnect() throws Exception {
 
-        final int i= 10000000;
+        final int i = 10000000;
         for (int j = 0; j < i; j++) {
             try {
                 System.out.println(ZKClientFactory.getClient().getState());

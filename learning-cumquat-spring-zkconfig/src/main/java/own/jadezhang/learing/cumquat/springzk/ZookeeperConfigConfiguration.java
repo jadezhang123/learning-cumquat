@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class ZookeeperConfigConfiguration {
 
     @Bean
-    public ZookeeperConfig zookeeperConfig(){
+    public ZookeeperConfig zookeeperConfig() {
         ZookeeperConfig zookeeperConfig = new ZookeeperConfig();
         zookeeperConfig.setLocation(new ZookeeperResource());
         return zookeeperConfig;

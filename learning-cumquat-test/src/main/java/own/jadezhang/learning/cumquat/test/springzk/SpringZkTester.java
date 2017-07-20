@@ -22,8 +22,8 @@ public class SpringZkTester {
                 public void run() {
                     ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
                     TestDomain bean = ctx.getBean(TestDomain.class);
-                    System.out.println(" the name of testDomain is  "+bean.getName());
-                    System.out.println(" the quartzDB of testDomain is  "+bean.getQuartzDB());
+                    System.out.println(" the name of testDomain is  " + bean.getName());
+                    System.out.println(" the quartzDB of testDomain is  " + bean.getQuartzDB());
                 }
             });
         }
@@ -31,11 +31,11 @@ public class SpringZkTester {
 
     }
 
-    public static void test(){
+    public static void test() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         TestDomain bean = ctx.getBean(TestDomain.class);
-        System.out.println(" the name of testDomain is  "+bean.getName());
-        System.out.println(" the quartzDB of testDomain is  "+bean.getQuartzDB());
+        System.out.println(" the name of testDomain is  " + bean.getName());
+        System.out.println(" the quartzDB of testDomain is  " + bean.getQuartzDB());
     }
 
     public static void main(String[] args) throws Exception {

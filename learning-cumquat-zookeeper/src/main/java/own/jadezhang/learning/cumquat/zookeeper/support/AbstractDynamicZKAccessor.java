@@ -76,7 +76,7 @@ public abstract class AbstractDynamicZKAccessor extends DefaultZKAccessor implem
                 Executors.newSingleThreadExecutor().execute(new Runnable() {
                     @Override
                     public void run() {
-                        switch (event.getType()){
+                        switch (event.getType()) {
                             case NodeCreated:
                                 break;
                             case NodeDataChanged:

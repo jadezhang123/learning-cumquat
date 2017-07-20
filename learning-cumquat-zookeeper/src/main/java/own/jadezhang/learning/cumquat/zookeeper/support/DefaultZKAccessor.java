@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class DefaultZKAccessor implements ZKAccessor {
     protected static final Logger logger = LoggerFactory.getLogger(DefaultZKAccessor.class);
-    private volatile boolean closed = false;
     protected CuratorFramework zkClient;
+    private volatile boolean closed = false;
 
     public DefaultZKAccessor() {
         zkClient = ZKClientFactory.getClient();

@@ -8,11 +8,11 @@ import own.jadezhang.learning.cumquat.zookeeper.ZKAccessor;
  */
 public class ZKAccessorFactory {
 
-    public static ZKAccessor zkAccessor(){
+    public static ZKAccessor zkAccessor() {
         return new DefaultZKAccessor();
     }
 
-    public static DynamicZKAccessor dynamicZKAccessor(){
+    public static DynamicZKAccessor dynamicZKAccessor() {
         return new DefaultDynamicZKAccessor();
     }
 }

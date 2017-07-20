@@ -9,7 +9,6 @@ import own.jadezhang.learning.cumquat.zookeeper.listener.StateListener;
 public interface DynamicZKAccessor extends ZKAccessor {
 
     /**
-     *
      * @param path
      * @param listener
      * @return

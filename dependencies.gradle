@@ -1,9 +1,9 @@
 configure(allprojects) { project ->
-    ext.baseCommonVersion="0.0.2-SNAPSHOT"
-    ext.springframworkVersion="4.2.5.RELEASE"
-    ext.mysqlConnectorVersion="5.1.26"
-    ext.dubboVersion="2.5.3"
-    ext.dubboZKClientVersion="0.4"
-    ext.junitVersion="4.11"
-    ext.localMavenRepository="file://F:/devRepository/mavenRepository/"
+    ext.baseCommonVersion = "0.0.2-SNAPSHOT"
+    ext.springframworkVersion = "4.2.5.RELEASE"
+    ext.mysqlConnectorVersion = "5.1.26"
+    ext.dubboVersion = "2.5.3"
+    ext.dubboZKClientVersion = "0.4"
+    ext.junitVersion = "4.11"
+    ext.localMavenRepository = "file://F:/devRepository/mavenRepository/"
 }

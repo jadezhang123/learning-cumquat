@@ -7,7 +7,7 @@ import own.jadezhang.learning.cumquat.zookeeper.curator.ZKClientFactory;
  */
 public class DynamicConfigurationFactory {
 
-    public static DynamicConfiguration dynamicConfiguration(){
+    public static DynamicConfiguration dynamicConfiguration() {
         return new CuratorDynamicConfiguration(ZKClientFactory.getClient());
     }
 }
