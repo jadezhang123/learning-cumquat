@@ -42,6 +42,7 @@ public class ExampleClientThatLocks {
         if (!lock.acquire(time, unit)) {
             throw new IllegalStateException(clientName + " 不能得到互斥锁");
         }
+        lock.acquire();
         System.out.println(clientName + " 再次获取到互斥锁");
         try {
             resource.use(); // 使用资源
